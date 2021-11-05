@@ -63,6 +63,48 @@ const client = new Client({
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+async function money(bestprice) {
+
+
+  var con = mysql.createConnection({
+    host: host,
+    user: usr,
+    password: mySecret,
+    database: db
+  });
+
+  con.connect(function(err) {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log("Connected to database!");
+  });
+  let quer = "INSERT INTO `money`(`bestprice`) VALUES ( '" + bestprice+ "')";
+  console.log(quer)
+  //INSERT INTO `prizes`( `objName`, `avgprize`, `bestprize`, `url`) VALUES ([value-2],[value-3],[value-4],[value-5])
+  //"SELECT " + "CONVERT_TZ(`currentTime`, @@session.time_zone, '+08:00') AS `currentTime` " + " FROM prizes"
+
+  con.query(quer, (err, result) => {
+    if (err) {
+      throw err
+    }
+    console.log(result)
+  })
+  quer = "UPDATE `money` SET `time`=CONVERT_TZ(`currentTime`, @@session.time_zone, '+08:00')";
+  con.query(quer, (err, result) => {
+    if (err) {
+      throw err
+    }
+    // console.log(result)
+  })
+  con.end();
+  await console.log("connection done");
+}
+
+
+
 async function uiop(obj, avgprize, bestprize, url) {
 
 
@@ -1272,8 +1314,17 @@ client.on("message", async msg => {
       console.log(arr)
       result += "最高可能價格:\n";
       for (var i = 0; i < 10; i++) {
-        result += "1:" + arr[i] + "萬\n";
+        if(arr[i]<=9000)result += "1:" + arr[i] + "萬\n";
       }
+      for (var i = 0; i < 10; i++) {
+        if(arr[i]<=3000){
+
+          await money(parseInt(arr[i]));
+          await mongo_money(parseInt(arr[i]));
+          i=1000;
+          }
+      }
+      
       msging = true;
       await msg.reply(result);
       array.length = 0
@@ -1405,5 +1456,33 @@ async function mongo_curprices(obj, avgprize, bestprize, url) {
     await client.close();
   }
   
+}
+
+
+async function mongo_money(bestprice) {
+  const client = new MongoClient(uri);
+  try {
+    await client.connect();
+    const dbo = client.db("bot");
+    const collection = dbo.collection("money");
+  
+    var isoDateString_origin = new Date();
+    var isoDateString = new Date().addHours(8);
+    console.log(isoDateString);
+    bestprice=Math.round(bestprice)
+    const doc = {
+      currentTime: isoDateString_origin,
+      bestprice: bestprice,
+      time: isoDateString
+    }
+    const result = await collection.insertOne(doc);
+    console.log(result)
+    
+
+    client.close();
+
+  }finally {
+    await client.close();
+  }
 }
 //process.exit(1);
