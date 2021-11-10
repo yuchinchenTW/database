@@ -1318,10 +1318,11 @@ client.on("message", async msg => {
       }
       for (var i = 0; i < 10; i++) {
         if(arr[i]<=3000){
-
+          if(arr.length>6&&arr[i]/arr[i+1]<2){
           await money(parseInt(arr[i]));
           await mongo_money(parseInt(arr[i]));
           i=1000;
+          }
           }
       }
       
