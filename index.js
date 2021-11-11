@@ -1,5 +1,5 @@
 "use strict";
-
+const keepAlive = require('./server');
 var TinyURL = require('tinyurl');
 const QuickChart = require('quickchart-js');
 let fetch = require('node-fetch');
@@ -214,7 +214,7 @@ let msging = true;
 // start of the program
 
 
-
+keepAlive()
 client.on("ready", () => {
   client.login(token);
   console.log(`Logged in as ${client.user.tag}!`)
