@@ -1241,7 +1241,11 @@ client.on("message", async msg => {
           console.log(err)
         console.log(res);
         msg.channel.send(res);
-        if(typeof q_avg === "number"&&typeof q_best === "number"&&new_avg === "number"&&new_best === "number"){
+        console.log(typeof q_avg === "number")
+        console.log(typeof q_best === "number")
+        console.log(typeof new_avg === "number")
+        console.log(typeof new_best === "number")
+        if((typeof q_avg === "number")==true&&(typeof q_best === "number")==true&&(typeof new_avg === "number")==true&&(typeof new_best === "number")==true){
         uiop(q_objname, q_avg, q_best, res)
         currentp(new_objname, new_avg, new_best, res)
         mongo_curprices(new_objname, new_avg, new_best, res)
