@@ -1245,7 +1245,8 @@ client.on("message", async msg => {
         console.log(typeof q_best === "number")
         console.log(typeof new_avg === "number")
         console.log(typeof new_best === "number")
-        if((typeof q_avg === "number")==true&&(typeof q_best === "number")==true&&(typeof new_avg === "number")==true&&(typeof new_best === "number")==true){
+        //Number.isNaN(q_avg)==false
+        if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
         uiop(q_objname, q_avg, q_best, res)
         currentp(new_objname, new_avg, new_best, res)
         mongo_curprices(new_objname, new_avg, new_best, res)
