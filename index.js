@@ -52,6 +52,7 @@ const {
   token
 } = process.env.DISCORD_TOKEN // use the require method
 
+
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS]
 });
@@ -1276,7 +1277,7 @@ client.on("message", async msg => {
       while (bool) {
         msging = false;
         await sleep(200);
-        URL = "https://www.8591.com.tw/mallList-list.html?searchGame=859&searchServer=0&buyStatus=1&searchType=0&searchKey=&firstRow=" + section;
+        URL = "https://www.8591.com.tw/mallList-list.html?searchGame=859&searchServer=0&searchType=0&searchKey=&firstRow=" + section;
         console.log(URL);
         const _constdata = await getRawData(URL);
         let data = _constdata;
