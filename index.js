@@ -3,7 +3,7 @@ const keepAlive = require('./server');
 var TinyURL = require('tinyurl');
 const QuickChart = require('quickchart-js');
 let fetch = require('node-fetch');
-
+var shortUrl = require('node-url-shortener');
 var mysql = require('mysql');
 
 const mySecret = process.env['password'];
@@ -1237,7 +1237,7 @@ client.on("message", async msg => {
         },
       };
       let sm_url = "";
-      TinyURL.shorten(chartUrl, function(res, err) {
+    /**  TinyURL.shorten(chartUrl, function(res, err) {
         if (err)
           console.log(err)
         console.log(res);
@@ -1253,7 +1253,23 @@ client.on("message", async msg => {
         mongo_curprices(new_objname, new_avg, new_best, res)
         mongo_prices(q_objname, q_avg, q_best, res)
         }
-      });
+      });*/
+      shortUrl.short(chartUrl, function(err, url){
+        if (err) console.log(err)
+
+        console.log(url);
+        msg.channel.send(url);
+        console.log(typeof q_avg === "number")
+        console.log(typeof q_best === "number")
+        console.log(typeof new_avg === "number")
+        console.log(typeof new_best === "number")
+        if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
+        uiop(q_objname, q_avg, q_best, url)
+        currentp(new_objname, new_avg, new_best, url)
+        mongo_curprices(new_objname, new_avg, new_best, url)
+        mongo_prices(q_objname, q_avg, q_best, url)
+        }
+        });   
 
 
 
