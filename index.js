@@ -1248,10 +1248,15 @@ client.on("message", async msg => {
         console.log(typeof new_best === "number")
         //Number.isNaN(q_avg)==false
         if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
+          try{
         uiop(q_objname, q_avg, q_best, res)
         currentp(new_objname, new_avg, new_best, res)
         mongo_curprices(new_objname, new_avg, new_best, res)
         mongo_prices(q_objname, q_avg, q_best, res)
+          }catch(e){
+              console.log(e)
+               msg.channel.send(e);
+          }
         }
       });
       /**console.log("123")
