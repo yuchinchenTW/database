@@ -1237,7 +1237,7 @@ client.on("message", async msg => {
         },
       };
       let sm_url = "";
-    /**  TinyURL.shorten(chartUrl, function(res, err) {
+      TinyURL.shorten(chartUrl, function(res, err) {
         if (err)
           console.log(err)
         console.log(res);
@@ -1253,10 +1253,11 @@ client.on("message", async msg => {
         mongo_curprices(new_objname, new_avg, new_best, res)
         mongo_prices(q_objname, q_avg, q_best, res)
         }
-      });*/
-      shortUrl.short(chartUrl, function(err, url){
+      });
+      /**console.log("123")
+      await shortUrl.short(chartUrl, function(err, url){
         if (err) console.log(err)
-
+        console.log("123")
         console.log(url);
         msg.channel.send(url);
         console.log(typeof q_avg === "number")
@@ -1269,7 +1270,7 @@ client.on("message", async msg => {
         mongo_curprices(new_objname, new_avg, new_best, url)
         mongo_prices(q_objname, q_avg, q_best, url)
         }
-        });   
+        });   **/
 
 
 
