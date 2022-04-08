@@ -262,7 +262,16 @@ client.on("message", async msg => {
         URL = "https://www.8591.com.tw/mallList-list.html?id=859&%251=&gst=2&searchKey=" + item + "&firstRow=" + section;
         //URL=ttempp.concat(URL);
         console.log(URL);
-        const _constdata = await getRawData(URL);
+        var _constdata ="";
+        try {
+            _constdata = await getRawData(URL);
+        } catch (error) {
+          await sleep(1000);
+        _constdata = await getRawData(URL);
+        // expected output: ReferenceError: nonExistentFunction is not defined
+        // Note - error messages will vary depending on browser
+        }
+
         let data = _constdata;
         for (let i = 0; i < 26; i++) {
 
@@ -452,7 +461,15 @@ client.on("message", async msg => {
         URL = "https://www.8591.com.tw/mallList-list.html?searchGame=859&buyStatus=1&searchKey=" + item + "&firstRow=" + section;
         //URL=ttempp.concat(URL);
         console.log(URL);
-        const _constdata = await getRawData(URL);
+         var _constdata ="";
+        try {
+            _constdata = await getRawData(URL);
+        } catch (error) {
+          await sleep(1000);
+        _constdata = await getRawData(URL);
+        // expected output: ReferenceError: nonExistentFunction is not defined
+        // Note - error messages will vary depending on browser
+        }
         let data = _constdata;
         for (let i = 0; i < 26; i++) {
 
