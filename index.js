@@ -867,7 +867,7 @@ client.on("message", async msg => {
       search = true;
     } else if (msg.content === "音樂蔥") {
       item = "音樂蔥";
-      maxrange = 7000;
+      maxrange = 27000;
       minrange = 2000;
       check = "音樂蔥";
       search = true;
@@ -885,19 +885,19 @@ client.on("message", async msg => {
       search = true;
     } else if (msg.content === "影子刀") {
       item = "影子刀";
-      maxrange = 16000;
+      maxrange = 26000;
       minrange = 2000;
       check = "影子刀";
       search = true;
     } else if (msg.content === "血刀") {
       item = "血刀";
-      maxrange = 19000;
+      maxrange = 29000;
       minrange = 5000;
       check = "血刀";
       search = true;
     } else if (msg.content === "紅武士之刃") {
       item = "紅武士之刃";
-      maxrange = 5000;
+      maxrange = 10000;
       minrange = 1000;
       check = "紅武士之刃";
       search = true;
@@ -1023,7 +1023,7 @@ client.on("message", async msg => {
       search = true;
     } else if (msg.content === "覺醒刀片") {
       item = "覺醒刀片";
-      maxrange = 30000;
+      maxrange = 40000;
       minrange = 10000;
       check = "覺醒刀片";
       search = true;
