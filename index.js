@@ -1299,10 +1299,11 @@ client.on("message", async msg => {
         console.log(url);
         msg.channel.send(url);
        if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
-        uiop(q_objname, q_avg, q_best, url)
-        currentp(new_objname, new_avg, new_best, url)
         mongo_curprices(new_objname, new_avg, new_best, url)
         mongo_prices(q_objname, q_avg, q_best, url)
+        uiop(q_objname, q_avg, q_best, url)
+        currentp(new_objname, new_avg, new_best, url)
+
         }   
         });
 
@@ -1378,8 +1379,9 @@ client.on("message", async msg => {
       for (var i = 0; i < 10; i++) {
         if(arr[i]<=3000){
           if(arr.length>6&&arr[i]/arr[i+1]<2){
-          await money(parseInt(arr[i]));
           await mongo_money(parseInt(arr[i]));
+          await money(parseInt(arr[i]));
+          
           i=1000;
           }
           }
