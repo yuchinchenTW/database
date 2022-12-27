@@ -78,8 +78,9 @@ async function money(bestprice) {
 
   con.connect(function(err) {
     if (err) {
-      console.log(err)
       return
+      console.log(err)
+   
     }
     console.log("Connected to database!");
   });
@@ -90,6 +91,7 @@ async function money(bestprice) {
 
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
     }
     console.log(result)
@@ -97,9 +99,11 @@ async function money(bestprice) {
   quer = "UPDATE `money` SET `time`=CONVERT_TZ(`currentTime`, @@session.time_zone, '+08:00')";
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
+      
     }
-    // console.log(result)
+     console.log(result)
   })
   con.end();
   await console.log("connection done");
@@ -131,6 +135,7 @@ async function uiop(obj, avgprize, bestprize, url) {
 
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
     }
     console.log(result)
@@ -138,6 +143,7 @@ async function uiop(obj, avgprize, bestprize, url) {
   quer = "UPDATE `prizes` SET `time`=CONVERT_TZ(`currentTime`, @@session.time_zone, '+08:00')";
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
     }
     // console.log(result)
@@ -158,8 +164,8 @@ async function currentp(obj, avgprize, bestprize, url) {
 
   con.connect(function(err) {
     if (err) {
-      console.log(err)
       return
+      console.log(err)
     }
     console.log("Connected to database!");
   });
@@ -170,6 +176,7 @@ async function currentp(obj, avgprize, bestprize, url) {
 
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
     }
     console.log(result)
@@ -177,6 +184,7 @@ async function currentp(obj, avgprize, bestprize, url) {
   quer = "UPDATE `current_prizes` SET `time`=CONVERT_TZ(`currentTime`, @@session.time_zone, '+08:00')";
   con.query(quer, (err, result) => {
     if (err) {
+      return
       throw err
     }
     // console.log(result)
@@ -1291,23 +1299,33 @@ client.on("message", async msg => {
         mongo_prices(q_objname, q_avg, q_best, url)
         }
         });   **/
-
+        let URL_outer="";
         short.setProvider('is.gd');
         short.short(chartUrl, function (url, err) {
         if (err) console.log(err)
         //console.log("123")
         console.log(url);
         msg.channel.send(url);
-       if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
-        mongo_curprices(new_objname, new_avg, new_best, url)
-        mongo_prices(q_objname, q_avg, q_best, url)
-        uiop(q_objname, q_avg, q_best, url)
-        currentp(new_objname, new_avg, new_best, url)
-
-        }   
+              URL_outer=url;   
         });
 
+  
+  
+  
+   if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
+          await  mongo_curprices(new_objname, new_avg, new_best, URL_outer);
+          await  mongo_prices(q_objname, q_avg, q_best, URL_outer);
+          try {
+            await  uiop(q_objname, q_avg, q_best, URL_outer);
+            await  currentp(new_objname, new_avg, new_best, URL_outer);
+          }
+          catch (e) {
+    
+            logMyErrors(e) // 把例外物件傳給錯誤處理器
+          }
+     
 
+        } 
 
 
       await msg.channel.send({ embed: chartEmbed });
