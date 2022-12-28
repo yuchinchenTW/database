@@ -1309,8 +1309,10 @@ client.on("message", async msg => {
               URL_outer=url;   
         });
 
-  
-  
+    console.log("get log url")
+    console.log(URL_outer)
+    
+  await sleep(800);
   
    if(Number.isNaN(q_avg)==false&&Number.isNaN(q_best)==false&&Number.isNaN(new_avg)==false&&Number.isNaN(new_best)==false){
           await  mongo_curprices(new_objname, new_avg, new_best, URL_outer);
@@ -1476,7 +1478,8 @@ function compareDecimals(a, b) {
 
 client.login(token);
 
-async function mongo_prices(obj, avgprize, bestprize, url) {
+async function mongo_prices(obj, avgprize, bestprize, urls) {
+    console.log("------urls"+urls)
   const client = new MongoClient(uri);
   try {
     await client.connect();
@@ -1493,7 +1496,7 @@ async function mongo_prices(obj, avgprize, bestprize, url) {
       objName: obj,
       avgprize: avgprize,
       bestprize: bestprize,
-      url: url,
+      url: urls,
       time: isoDateString
     }
     const result = await collection.insertOne(doc);
@@ -1506,7 +1509,8 @@ async function mongo_prices(obj, avgprize, bestprize, url) {
     await client.close();
   }
 }
-async function mongo_curprices(obj, avgprize, bestprize, url) {
+async function mongo_curprices(obj, avgprize, bestprize, urls) {
+    console.log("--------urls"+urls)
   const client = new MongoClient(uri);
   try {
     await client.connect();
@@ -1523,7 +1527,7 @@ async function mongo_curprices(obj, avgprize, bestprize, url) {
       objName: obj,
       avgprize: avgprize,
       bestprize: bestprize,
-      url: url,
+      url: urls,
       time: isoDateString
     }
     const result = await collection.insertOne(doc);
